@@ -50,6 +50,8 @@ CONF_API_BASIC_AUTH_PASSWORD = "api_password"
 CONF_API_URL = "api_url"
 CONF_ALEXA_LANGUAGE = "alexa_language"
 
+ALEXA_LANGUAGE_KEYS = ["de-DE", "en-US"]
+
 ALEXA_LANGUAGE_COMMANDS = {
     "play_audio_de-DE": "sag music assistant spiele audio",
     "play_audio_en-US": "ask music assistant to play audio",
@@ -205,6 +207,7 @@ async def get_config_entries(
         ),
         ConfigEntry(
             key=CONF_ALEXA_LANGUAGE,
+            options=ALEXA_LANGUAGE_KEYS,
             type=ConfigEntryType.STRING,
             label="Alexa Language",
             required=True,
