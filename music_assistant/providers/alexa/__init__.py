@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, Any, cast
 import aiohttp
 from aiohttp import BasicAuth, web
 from alexapy import AlexaAPI, AlexaLogin, AlexaProxy
-from music_assistant_models.config_entries import ConfigEntry
+from music_assistant_models.config_entries import ConfigEntry, ConfigValueOption
 from music_assistant_models.enums import (
     ConfigEntryType,
     PlaybackState,
@@ -50,12 +50,45 @@ CONF_API_BASIC_AUTH_PASSWORD = "api_password"
 CONF_API_URL = "api_url"
 CONF_ALEXA_LANGUAGE = "alexa_language"
 
-ALEXA_LANGUAGE_KEYS = ["de-DE", "en-US"]
+ALEXA_LANGUAGE_KEYS = [
+    ConfigValueOption("de-DE", "German (Germany)"),
+    ConfigValueOption("en-US", "English (United States)"),
+    ConfigValueOption("en-GB", "English (United Kingdom)"),
+    ConfigValueOption("en-AU", "English (Australia)"),
+    ConfigValueOption("en-CA", "English (Canada)"),
+    ConfigValueOption("en-IN", "English (India)"),
+    ConfigValueOption("es-ES", "Spanish (Spain)"),
+    ConfigValueOption("es-MX", "Spanish (Mexico)"),
+    ConfigValueOption("es-US", "Spanish (United States)"),
+    ConfigValueOption("fr-FR", "French (France)"),
+    ConfigValueOption("fr-CA", "French (Canada)"),
+    ConfigValueOption("hi-IN", "Hindi (India)"),
+    ConfigValueOption("it-IT", "Italian (Italy)"),
+    ConfigValueOption("nl-NL", "Dutch (Netherlands)"),
+    ConfigValueOption("pt-BR", "Portuguese (Brazil)"),
+    ConfigValueOption("ar-SA", "Arabic (Saudi Arabia)"),
+    ConfigValueOption("ja-JP", "Japanese (Japan)"),
+]
 
 ALEXA_LANGUAGE_COMMANDS = {
-    "play_audio_de-DE": "sag music assistant spiele audio",
-    "play_audio_en-US": "ask music assistant to play audio",
-    "play_audio_default": "ask music assistant to play audio",
+    "play_audio_de-DE": "sag music assistant spiele audio",  # Working
+    "play_audio_en-US": "ask music assistant to play audio",  # Working
+    "play_audio_en-GB": "ask music assistant to play audio",  # Not tested
+    "play_audio_en-AU": "ask music assistant to play audio",  # Not tested
+    "play_audio_en-CA": "ask music assistant to play audio",  # Not tested
+    "play_audio_en-IN": "ask music assistant to play audio",  # Not tested
+    "play_audio_es-ES": "pídele a music assistant que reproduzca audio",  # Not tested
+    "play_audio_es-MX": "pídele a music assistant que reproduzca audio",  # Not tested
+    "play_audio_es-US": "pídele a music assistant que reproduzca audio",  # Not tested
+    "play_audio_fr-FR": "demande à music assistant de lire de l'audio",  # Not tested
+    "play_audio_fr-CA": "demande à music assistant de lire de l'audio",  # Not tested
+    "play_audio_hi-IN": "music assistant से ऑडियो चलाने के लिए कहो",  # Not tested
+    "play_audio_it-IT": "chiedi a music assistant di riprodurre audio",  # Not tested
+    "play_audio_nl-NL": "vraag music assistant om audio af te spelen",  # Not tested
+    "play_audio_pt-BR": "peça ao music assistant para reproduzir áudio",  # Not tested
+    "play_audio_ar-SA": "اطلب من music assistant تشغيل الصوت",  # Not tested
+    "play_audio_ja-JP": "music assistantでオーディオを再生して",  # Not tested
+    "play_audio_default": "ask music assistant to play audio",  # fallback
 }
 
 SUPPORTED_FEATURES: set[ProviderFeature] = set()  # no special features supported (yet)
