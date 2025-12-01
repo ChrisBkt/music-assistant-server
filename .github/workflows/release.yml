@@ -319,11 +319,17 @@ jobs:
           name: release-dists
           path: dist/
 
+      - name: Generate lower case repository owner
+        id: lower_owner
+        uses: ASzc/change-string-case-action@v6
+        with:
+          string: ${{ github.repository_owner }}
+
       - name: Log in to the GitHub container registry
         uses: docker/login-action@v3.6.0
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: ${{ steps.lower_owner.outputs.lowercase }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Docker Buildx
@@ -342,24 +348,24 @@ jobs:
             PATCH="${BASH_REMATCH[3]}"
           fi
 
-          TAGS="ghcr.io/${{ github.repository_owner }}/server:$VERSION"
+          TAGS="ghcr.io/${{ steps.lower_owner.outputs.lowercase }}/server:$VERSION"
 
           case "$CHANNEL" in
             stable)
               # For stable: add major, minor, major.minor, stable, and latest tags
-              TAGS="$TAGS,ghcr.io/${{ github.repository_owner }}/server:$MAJOR.$MINOR.$PATCH"
-              TAGS="$TAGS,ghcr.io/${{ github.repository_owner }}/server:$MAJOR.$MINOR"
-              TAGS="$TAGS,ghcr.io/${{ github.repository_owner }}/server:$MAJOR"
-              TAGS="$TAGS,ghcr.io/${{ github.repository_owner }}/server:stable"
-              TAGS="$TAGS,ghcr.io/${{ github.repository_owner }}/server:latest"
+              TAGS="$TAGS,ghcr.io/${{ steps.lower_owner.outputs.lowercase }}/server:$MAJOR.$MINOR.$PATCH"
+              TAGS="$TAGS,ghcr.io/${{ steps.lower_owner.outputs.lowercase }}/server:$MAJOR.$MINOR"
+              TAGS="$TAGS,ghcr.io/${{ steps.lower_owner.outputs.lowercase }}/server:$MAJOR"
+              TAGS="$TAGS,ghcr.io/${{ steps.lower_owner.outputs.lowercase }}/server:stable"
+              TAGS="$TAGS,ghcr.io/${{ steps.lower_owner.outputs.lowercase }}/server:latest"
               ;;
             beta)
               # For beta: add beta tag
-              TAGS="$TAGS,ghcr.io/${{ github.repository_owner }}/server:beta"
+              TAGS="$TAGS,ghcr.io/${{ steps.lower_owner.outputs.lowercase }}/server:beta"
               ;;
             nightly)
               # For nightly: add nightly tag
-              TAGS="$TAGS,ghcr.io/${{ github.repository_owner }}/server:nightly"
+              TAGS="$TAGS,ghcr.io/${{ steps.lower_owner.outputs.lowercase }}/server:nightly"
               ;;
           esac
 
