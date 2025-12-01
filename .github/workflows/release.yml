@@ -68,7 +68,7 @@ jobs:
         uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
           owner: ${{ github.repository_owner }}
-          repo: server
+          repo: ${{ github.event.repository.name }}
           github_token: ${{ secrets.PRIVILEGED_GITHUB_TOKEN }}
           workflow_file_name: test.yml
           ref: ${{ steps.branch.outputs.branch }}
