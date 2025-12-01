@@ -60,7 +60,7 @@ jobs:
             echo "branch=stable" >> $GITHUB_OUTPUT
             echo "Using stable branch for stable release"
           else
-            echo "branch=dev" >> $GITHUB_OUTPUT
+            echo "branch=dev_testing" >> $GITHUB_OUTPUT
             echo "Using dev branch for $CHANNEL release"
           fi
 
